@@ -1,0 +1,73 @@
+#include <iostream>
+#include <fstream>
+#include <string>
+#include <cstdlib>
+#include <sstream>
+#include "AVL_ADT.h"
+using namespace std;
+
+struct wordNode
+{
+	string key;
+	int frequency;
+};
+
+void print(wordNode ss)
+{
+	cout << ss.key << " " << ss.frequency << endl;
+}
+
+string trim(string input)
+{
+	stringstream ss;
+	for (int x = 0; x < (int)input.size(); x++)
+	{
+		if (isalpha(input[x]))
+		{
+			ss << input[x];
+		}
+	}
+
+	if (ss.str().length() > 0)
+		return ss.str();
+	else
+		return "";
+}
+
+int main()
+{
+	int total = 0;
+	AvlTree<wordNode, string> tree;
+	ifstream fin;
+	fin.open("article.txt");
+	if (fin.fail()) {
+		cout << "Input file opening failed.\n";
+		exit(1);
+	}
+
+	string word;
+
+	while (!fin.eof()) {
+		fin >> word;
+		wordNode o;
+		o.key = trim(word);
+		if (tree.AVL_Retrieve(word, o))
+		{
+			(tree.AVL_Retrieve2(word, o))->data.frequency++;
+			total++;
+		}
+		else
+		{
+			o.frequency = 1;
+			tree.AVL_Insert(o);
+			total++;
+		}
+	}
+
+	fin.close();
+	tree.AVL_Traverse(print);
+	tree.AVL_Print();
+	cout << "Total number of words: " << total << endl;
+	return 0;
+}
+

@@ -1,0 +1,1 @@
+An AVL tree is utilized, with other appropriate data structures, to create a frequency dictionary. A text file is inputted into a C++ program with the words stored into a struct that contains two variables, an int to represent the frequency of each word and a string which represents the key; each struct object is stored into a node in the AVL tree.
